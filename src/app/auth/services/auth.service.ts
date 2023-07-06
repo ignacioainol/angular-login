@@ -42,11 +42,21 @@ export class AuthService {
       );
   }
 
+  logout() {
+    console.log('logout from auth service');
+    localStorage.removeItem('token');
+    this._currentUser.set(null);
+    this._authStatus.set(AuthStatus.notAuthenticated);
+  }
+
   checkAuthStatus(): Observable<boolean> {
     const url = `${this.baseUrl}/auth/check-token`;
     const token = localStorage.getItem('token');
 
-    if (!token) return of(false);
+    if (!token) {
+      this.logout();
+      return of(false);
+    }
 
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${token}`);
