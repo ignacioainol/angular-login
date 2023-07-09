@@ -12,6 +12,7 @@ export class LoginPageComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router)
+  public showPassword = false;
 
   public myForm: FormGroup = this.fb.group({
     email: ['iggnaxios@gmail.com', [Validators.required, Validators.email]],
@@ -27,5 +28,9 @@ export class LoginPageComponent {
           Swal.fire('Error', message, 'error')
         }
       })
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 }
